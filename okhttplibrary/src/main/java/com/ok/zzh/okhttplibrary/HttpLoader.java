@@ -6,6 +6,7 @@ import com.ok.zzh.okhttplibrary.builder.RequestBuilder;
 import com.ok.zzh.okhttplibrary.builder.builderextend.GetBuilder;
 import com.ok.zzh.okhttplibrary.builder.builderextend.PostBuilder;
 import com.ok.zzh.okhttplibrary.callback.CallBack;
+import com.ok.zzh.okhttplibrary.callback.callbackextend.FileCallBack;
 import com.ok.zzh.okhttplibrary.callback.callbackextend.ObjectCallBack;
 
 import java.io.File;
@@ -81,11 +82,20 @@ public class HttpLoader {
      * @param requestCode
      * @param tag
      * @param fileKey
-     * @param files
+     * @param file
      * @param listener
      */
     public static void postFiles(String url, Map<String, String> params, final Class clazz,
-                                 final int requestCode, Object tag, String fileKey, Map<String, File> files, final ResponseListener listener) {
+                                 final int requestCode, Object tag, String fileKey, String filename,
+                                 File file, final ResponseListener listener) {
+        Map<String, File> files = new HashMap<>();
+        files.put(filename, file);
+        postFiles(url, params, clazz, requestCode, tag, fileKey, files, listener);
+    }
+
+    public static void postFiles(String url, Map<String, String> params, final Class clazz,
+                                 final int requestCode, Object tag, String fileKey, Map<String, File> files,
+                                 final ResponseListener listener) {
         PostBuilder postBuilder = OkHttpHelper.post()
                 .params(params);
         if (!TextUtils.isEmpty(fileKey)) {
@@ -107,6 +117,17 @@ public class HttpLoader {
                 listener.onResponseSuccess(requestCode, response);
             }
         });
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param url
+     * @param fileCallBack
+     */
+    public static void downLoadFile(String url, FileCallBack fileCallBack) {
+        GetBuilder getBuilder = OkHttpHelper.get();
+        initRequestBuilder(getBuilder, url, 0, null, fileCallBack);
     }
 
     /**

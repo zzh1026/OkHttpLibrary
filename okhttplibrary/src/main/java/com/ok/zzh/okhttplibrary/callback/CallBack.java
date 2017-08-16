@@ -57,7 +57,7 @@ public abstract class CallBack<T> {
      * <p>
      * 在网络下载之间调用
      *
-     * @param progress    文件已经下载的大小
+     * @param progress    文件已经下载的大小 , 百分比 大小为  0 --> 1 变化
      * @param total       文件总大小
      * @param reqeustCode 请求码
      */

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import okhttp3.Call;
 import okhttp3.Response;
 
 /**
@@ -56,6 +57,7 @@ public abstract class FileCallBack extends CallBack<File> {
             if (file.exists()) {
                 file.delete();
             }
+            fos = new FileOutputStream(file);
 
             while ((len = is.read(buf)) != -1) {
                 sum += len;
@@ -82,5 +84,18 @@ public abstract class FileCallBack extends CallBack<File> {
             } catch (IOException e) {
             }
         }
+    }
+
+    @Override
+    public void onResponse(File response, int reqeustCode) {
+    }
+
+    @Override
+    public void onError(Call call, Exception e, int reqeustCode) {
+    }
+
+    @Override
+    public void inProgress(float progress, long total, int reqeustCode) {
+        super.inProgress(progress, total, reqeustCode);
     }
 }

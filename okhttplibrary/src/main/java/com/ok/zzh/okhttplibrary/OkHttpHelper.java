@@ -131,6 +131,13 @@ public class OkHttpHelper {
         return new PostBuilder();
     }
 
+    /**
+     * get 下载文件方法
+     */
+    public static GetBuilder downLoadFile() {
+        return new GetBuilder();
+    }
+
     public void execute(final RequestCall requestCall, CallBack callback) {
         final int requestCode = requestCall.getOkHttpRequest().getRequestCode();
 
