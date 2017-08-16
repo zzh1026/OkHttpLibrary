@@ -21,6 +21,8 @@ public class LoggerInterceptor {
      * @return
      */
     public static Interceptor getLoggingIntercaptor() {
+        if (true)
+            return null;
         LoggingInterceptor.Builder loggingInterceptor = new LoggingInterceptor.Builder();
         loggingInterceptor
                 .loggable(true)
