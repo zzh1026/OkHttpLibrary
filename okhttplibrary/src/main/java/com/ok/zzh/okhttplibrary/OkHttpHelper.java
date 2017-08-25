@@ -9,6 +9,7 @@ import com.ok.zzh.okhttplibrary.builder.builderextend.PostBuilder;
 import com.ok.zzh.okhttplibrary.callback.CallBack;
 import com.ok.zzh.okhttplibrary.cookie.CookieJarImpl;
 import com.ok.zzh.okhttplibrary.cookie.store.MemoryCookieStore;
+import com.ok.zzh.okhttplibrary.https.HttpsUtils;
 import com.ok.zzh.okhttplibrary.interceptor.LoggerInterceptor;
 import com.ok.zzh.okhttplibrary.request.RequestCall;
 
@@ -63,12 +64,14 @@ public class OkHttpHelper {
      * @return
      */
     private OkHttpClient initOkHttpClient() {
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.cookieJar(new CookieJarImpl(new MemoryCookieStore()));
         builder.readTimeout(DEFAULT_TIME_OUT_MILLISECONDS, TimeUnit.MILLISECONDS);
         builder.writeTimeout(DEFAULT_TIME_OUT_MILLISECONDS, TimeUnit.MILLISECONDS);
         builder.connectTimeout(DEFAULT_TIME_OUT_MILLISECONDS, TimeUnit.MILLISECONDS);
         builder.addInterceptor(LoggerInterceptor.getLoggingIntercaptor());
+        builder.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
         return builder.build();
     }
 

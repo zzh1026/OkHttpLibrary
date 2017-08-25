@@ -29,12 +29,12 @@ public class HttpLoader {
     /**
      * 以get方式发送请求
      *
-     * @param url
-     * @param params
-     * @param clazz
-     * @param requestCode
-     * @param tag
-     * @param listener
+     * @param url         请求地址
+     * @param params      地址后面跟随的参数 表示在url后面添加: '?key=value&key2=value2' 的形式
+     * @param clazz       返回结果封装成的object对象
+     * @param requestCode 请求码
+     * @param tag         标签,通过标签来取消请求
+     * @param listener    相应结果监听
      */
     public static void get(String url, Map<String, String> params, final Class clazz,
                            final int requestCode, Object tag, final ResponseListener listener) {
@@ -61,12 +61,12 @@ public class HttpLoader {
     /**
      * 发送post请求
      *
-     * @param url
-     * @param params
-     * @param clazz
-     * @param requestCode
-     * @param tag
-     * @param listener
+     * @param url         地址
+     * @param params      请求体参数(项目中所有post请求都包含默认的请求体参数,默认的请求体参数会抽取,这个params是默认之外的其他参数,可以为null)
+     * @param clazz       结果封装的对象
+     * @param requestCode 请求码
+     * @param tag         标签
+     * @param listener    结果监听
      */
     public static void post(String url, Map<String, String> params, final Class clazz,
                             final int requestCode, Object tag, final ResponseListener listener) {
@@ -74,25 +74,37 @@ public class HttpLoader {
     }
 
     /**
-     * 上传文件
+     * 上传单个文件
      *
-     * @param url
-     * @param params
-     * @param clazz
-     * @param requestCode
-     * @param tag
-     * @param fileKey
-     * @param file
-     * @param listener
+     * @param url         地址
+     * @param params      请求体参数
+     * @param clazz       结果封装的对象
+     * @param requestCode 请求码
+     * @param tag         标签
+     * @param fileKey     文件的key
+     * @param file        文件
+     * @param listener    结果监听
      */
-    public static void postFiles(String url, Map<String, String> params, final Class clazz,
-                                 final int requestCode, Object tag, String fileKey, String filename,
-                                 File file, final ResponseListener listener) {
+    public static void postFile(String url, Map<String, String> params, final Class clazz,
+                                final int requestCode, Object tag, String fileKey, String filename,
+                                File file, final ResponseListener listener) {
         Map<String, File> files = new HashMap<>();
         files.put(filename, file);
         postFiles(url, params, clazz, requestCode, tag, fileKey, files, listener);
     }
 
+    /**
+     * 上传多个文件
+     *
+     * @param url         地址
+     * @param params      请求体参数
+     * @param clazz       结果封装的对象
+     * @param requestCode 请求码
+     * @param tag         标签
+     * @param fileKey     文件的key
+     * @param files       上传的文件集合
+     * @param listener    结果监听
+     */
     public static void postFiles(String url, Map<String, String> params, final Class clazz,
                                  final int requestCode, Object tag, String fileKey, Map<String, File> files,
                                  final ResponseListener listener) {
@@ -122,8 +134,8 @@ public class HttpLoader {
     /**
      * 下载文件
      *
-     * @param url
-     * @param fileCallBack
+     * @param url          下载地址
+     * @param fileCallBack 文件的下载监听回调
      */
     public static void downLoadFile(String url, FileCallBack fileCallBack) {
         GetBuilder getBuilder = OkHttpHelper.get();
